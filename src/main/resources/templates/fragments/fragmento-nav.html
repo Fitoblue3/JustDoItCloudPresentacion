@@ -1,0 +1,21 @@
+<div th:fragment="nav()">
+    <!-- Navigation area -->
+    <nav class="navigation">
+        <h3>Tareas</h3>
+        <ul>
+            <li>
+                <a th:href="@{/user/tasks}">Tareas de usuario actual</a>
+            </li>
+            <li>
+                <a th:href="@{/user/tasks/report}">Reporte de tareas</a>
+            </li>
+            <li>
+                <a th:href="@{/acercade}">Acerca de</a>
+            </li>
+            <li>
+                <a th:href="@{/salir}">Salir</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
