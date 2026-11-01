@@ -16,15 +16,33 @@ import java.time.LocalDateTime;
 @SessionAttributes("user")
 public class UserTasksController {
 
+    // new UserTaskController(); -> x0956
+    // UserTaskController controller = new UserTaskController(); -> x0879
+    // UserTaskController controller2 = controller;
+    // controller = null;
+    // Puedo limpiar x0879? No, por que controller2 sigue apuntando al mismo objeto en memoria.
+
+    // La Clase del objeto en x0879 es UserTaskController
+    // El Tipo de la variable controller es UserTaskController
+
     @ModelAttribute(name = "user")
     public User user() {
         User usr =  new User("christine", "Christine McVie", "christine@fm.com", User.Type.REGULAR);
         // Add a few sample tasks
         Task task = new Task("Comprar Leche", LocalDateTime.now(), null, Task.Status.DONE);
         usr.addTask(task);
+
         task = new Task("Reparacion de sistema de frenos del carro", LocalDateTime.now(),
                 LocalDateTime.now().plusDays(3).toLocalDate(), Task.Status.INPROGRESS);
         usr.addTask(task);
+
+        task = new Task("Comprar GTA VI", LocalDateTime.now(),
+                LocalDateTime.now().plusDays(15).toLocalDate(), Task.Status.PENDING);
+        usr.addTask(task);
+
+        task = new Task("Reparar el teléfono", LocalDateTime.now(), null, Task.Status.PENDING);
+        usr.addTask(task);
+
         return usr;
     }
 
@@ -46,5 +64,11 @@ public class UserTasksController {
 
         user.addTask(newTask);
         return "redirect:/user/tasks";
+    }
+
+    @GetMapping("/report")
+    public String showUserReport(Model model) {
+        model.addAttribute("task", user().getTasks());
+        return "usertasksreport";
     }
 }
